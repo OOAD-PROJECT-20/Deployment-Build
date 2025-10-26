@@ -44,23 +44,28 @@ public class AdminOrderService {
         orderRepository.save(order);
 
         // Send email notification
-        if ("APPROVED".equals(status)) {
-            String to = order.getCustomer().getEmail();
-            String subject = "Payment Approved - Order #" + order.getOrderId();
-            String body = "Hello " + order.getQuotation().getQname() + ",\n\n" +
-                    "Your payment for Order #" + order.getOrderId() + " has been APPROVED.\n" +
-                    "Total Amount: Rs. " + order.getTotalAmount() + "\n\n" +
-                    "Your order is now being processed for delivery.\n\n" +
-                    "Thank you for your business!";
-            emailService.sendEmail(to, subject, body);
-        } else if ("REJECTED".equals(status)) {
-            String to = order.getCustomer().getEmail();
-            String subject = "Payment Rejected - Order #" + order.getOrderId();
-            String body = "Hello " + order.getQuotation().getQname() + ",\n\n" +
-                    "Unfortunately, your payment for Order #" + order.getOrderId() + " has been REJECTED.\n" +
-                    "Please contact us for more information or submit a valid payment slip.\n\n" +
-                    "Thank you for your understanding.";
-            emailService.sendEmail(to, subject, body);
+        try {
+            if ("APPROVED".equals(status)) {
+                String to = order.getCustomer().getEmail();
+                String subject = "Payment Approved - Order #" + order.getOrderId();
+                String body = "Hello " + order.getQuotation().getQname() + ",\n\n" +
+                        "Your payment for Order #" + order.getOrderId() + " has been APPROVED.\n" +
+                        "Total Amount: Rs. " + order.getTotalAmount() + "\n\n" +
+                        "Your order is now being processed for delivery.\n\n" +
+                        "Thank you for your business!";
+                emailService.sendEmail(to, subject, body);
+            } else if ("REJECTED".equals(status)) {
+                String to = order.getCustomer().getEmail();
+                String subject = "Payment Rejected - Order #" + order.getOrderId();
+                String body = "Hello " + order.getQuotation().getQname() + ",\n\n" +
+                        "Unfortunately, your payment for Order #" + order.getOrderId() + " has been REJECTED.\n" +
+                        "Please contact us for more information or submit a valid payment slip.\n\n" +
+                        "Thank you for your understanding.";
+                emailService.sendEmail(to, subject, body);
+            }
+        } catch (Exception e) {
+            // Email failed but status update still succeeds
+            System.err.println("Email notification failed: " + e.getMessage());
         }
     }
 

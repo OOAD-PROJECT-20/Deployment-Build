@@ -58,15 +58,20 @@ public class AdminService {
         quotationRepository.save(quotation);
 
         if ("APPROVED".equals(status)) {
-            String to = quotation.getCustomer().getEmail();
-            String subject = "Your Quotation is Approved";
-            String body = "Hello " + quotation.getQname() + ",\n\n" +
-                    "Your quotation with ID " + quotation.getQuotationId() + " has been APPROVED.\n" +
-                    "Total Price: Rs. " + quotation.getTotalPrice() + "\n\n" +
-                    "You can now proceed with making your payment\n\n" +
-                    "We will ensure product delivery as soon as possible\n\n" +
-                    "Thank you for choosing us!";
-            emailService.sendEmail(to, subject, body);
+            try {
+                String to = quotation.getCustomer().getEmail();
+                String subject = "Your Quotation is Approved";
+                String body = "Hello " + quotation.getQname() + ",\n\n" +
+                        "Your quotation with ID " + quotation.getQuotationId() + " has been APPROVED.\n" +
+                        "Total Price: Rs. " + quotation.getTotalPrice() + "\n\n" +
+                        "You can now proceed with making your payment\n\n" +
+                        "We will ensure product delivery as soon as possible\n\n" +
+                        "Thank you for choosing us!";
+                emailService.sendEmail(to, subject, body);
+            } catch (Exception e) {
+                // Email failed but approval still succeeds
+                System.err.println("Email notification failed: " + e.getMessage());
+            }
         }
     }
 
