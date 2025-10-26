@@ -9,7 +9,10 @@ public class GlobalCorsConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:3000") // change to your React origin or use "*" for development
+                .allowedOrigins(
+                    "http://localhost:3000",
+                    "https://kodikaraenterprises.netlify.app"
+                )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true);
