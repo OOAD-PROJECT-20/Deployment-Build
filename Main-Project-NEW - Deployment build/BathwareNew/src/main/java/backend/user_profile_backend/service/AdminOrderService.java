@@ -89,7 +89,10 @@ public class AdminOrderService {
 
         orderRepository.save(order);
 
-        // Send email notification for delivery status
+        // Email notification functionality - disabled for deployment demo
+        // NOTE: Email service is configured but disabled to avoid timeout on Render free tier
+        // Uncomment below to enable delivery status email notifications in production
+        /*
         String to = order.getCustomer().getEmail();
         String subject = "Order Status Update - Order #" + order.getOrderId();
         String body = "Hello " + order.getQuotation().getQname() + ",\n\n" +
@@ -105,6 +108,7 @@ public class AdminOrderService {
 
         body += "Thank you for your business!";
         emailService.sendEmail(to, subject, body);
+        */
     }
 
     // Helper method to map Order to OrderDto
