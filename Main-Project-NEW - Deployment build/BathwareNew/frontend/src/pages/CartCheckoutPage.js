@@ -162,7 +162,7 @@ export default function CheckoutPage({ onBack }) {
     if (Object.keys(newErrors).length > 0) return setErrors(newErrors);
 
     axios
-      .post("${API_BASE_URL}/checkout/quotation/request", { userId, ...form })
+      .post(`${API_BASE_URL}/checkout/quotation/request`, { userId, ...form })
       .then(() => {
         setSuccessMessage("Quotation created successfully!");
         setCartItems([]);
@@ -195,7 +195,7 @@ export default function CheckoutPage({ onBack }) {
     formData.append("quotationId", selectedQuotation);
 
     try {
-      await axios.post("${API_BASE_URL}/orders/upload", formData, {
+      await axios.post(`${API_BASE_URL}/orders/upload`, formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setPaymentMessage("Payment slip uploaded successfully! Stock has been updated.");

@@ -15,7 +15,7 @@ const ProductsPage = ({ onBack, onAddToCart, cartCount = 0 }) => {
 
     const fetchProducts = async () => {
         try {
-            const response = await axios.get('${API_BASE_URL}/products');
+            const response = await axios.get(`${API_BASE_URL}/products`);
             // Get all products - use database imageUrl as-is
             setAllProducts(response.data);
         } catch (error) {

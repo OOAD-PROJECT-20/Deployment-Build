@@ -30,7 +30,7 @@ const ProductHomePage = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('${API_BASE_URL}/categories');
+        const response = await axios.get(`${API_BASE_URL}/categories`);
         setCategories(response.data);
       } catch (error) {
         console.error('Error fetching categories:', error);

@@ -18,7 +18,7 @@ const WaterClosetsPage = ({ onBack, onAddToCart, cartCount = 0, isAuthenticated 
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('${API_BASE_URL}/products');
+      const response = await axios.get(`${API_BASE_URL}/products`);
       // Filter products by "Water Closets" category - use database imageUrl as-is
       const filteredProducts = response.data.filter(
         product => product.category?.name === 'Water Closets'

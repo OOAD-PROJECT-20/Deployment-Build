@@ -18,7 +18,7 @@ const BasinsPage = ({ onBack, onAddToCart, cartCount = 0, isAuthenticated = true
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('${API_BASE_URL}/products');
+      const response = await axios.get(`${API_BASE_URL}/products`);
       // Filter products by "Basins" category - use database imageUrl as-is
       const filteredProducts = response.data.filter(
         product => product.category?.name === 'Basins'

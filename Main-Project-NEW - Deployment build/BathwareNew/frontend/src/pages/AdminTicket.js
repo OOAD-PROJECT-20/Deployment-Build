@@ -16,7 +16,7 @@ const AdminTickets = () => {
 
     const loadTickets = async () => {
         try {
-            const response = await fetch("${API_BASE_URL}/api/support");
+            const response = await fetch(`${API_BASE_URL}/api/support`);
             const data = await response.json();
             setTickets(data);
             setLoading(false);

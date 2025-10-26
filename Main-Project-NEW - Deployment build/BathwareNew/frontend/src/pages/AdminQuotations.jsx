@@ -14,7 +14,7 @@ function AdminPage() {
 
   // Fetch quotations
   useEffect(() => {
-    fetch("${API_BASE_URL}/checkout/quotation/admin/all")
+    fetch(`${API_BASE_URL}/checkout/quotation/admin/all`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Quotations data received:", data);
@@ -32,7 +32,7 @@ function AdminPage() {
 
   // Fetch orders
   useEffect(() => {
-    fetch("${API_BASE_URL}/admin/orders/all")
+    fetch(`${API_BASE_URL}/admin/orders/all`)
       .then((res) => res.json())
       .then((data) => {
         console.log("Orders data received:", data);

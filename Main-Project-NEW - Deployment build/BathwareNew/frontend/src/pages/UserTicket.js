@@ -37,8 +37,8 @@ const UserTickets = () => {
                 return;
             }
             
-            console.log("📡 Calling API: ${API_BASE_URL}/api/support");
-            const response = await fetch("${API_BASE_URL}/api/support");
+            console.log(`📡 Calling API: ${API_BASE_URL}/api/support`);
+            const response = await fetch(`${API_BASE_URL}/api/support`);
             console.log("📡 Response status:", response.status);
             
             if (!response.ok) {
@@ -84,7 +84,7 @@ const UserTickets = () => {
                 return;
             }
 
-            const response = await fetch("${API_BASE_URL}/api/support", {
+            const response = await fetch(`${API_BASE_URL}/api/support`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({

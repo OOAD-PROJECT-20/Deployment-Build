@@ -4,13 +4,49 @@
 -- =====================================================
 -- NOTE: In Render, the database is already created
 -- You only need to run the table creation and data insertion
+-- 
+-- IMPORTANT: This file uses "USER" (uppercase) to match
+-- Spring Boot's globally_quoted_identifiers=true setting
+-- =====================================================
+
+-- =====================================================
+-- PART 0: CLEAN UP EXISTING TABLES (Optional - Fresh Start)
+-- =====================================================
+-- CAUTION: This will DELETE ALL DATA in existing tables!
+-- Uncomment the lines below only if you want a complete fresh start
+
+-- Drop all tables in correct order (respecting foreign keys)
+-- DROP TABLE IF EXISTS "support" CASCADE;
+-- DROP TABLE IF EXISTS "orders" CASCADE;
+-- DROP TABLE IF EXISTS "quotation_items" CASCADE;
+-- DROP TABLE IF EXISTS "quotation" CASCADE;
+-- DROP TABLE IF EXISTS "cart" CASCADE;
+-- DROP TABLE IF EXISTS "products" CASCADE;
+-- DROP TABLE IF EXISTS "categories" CASCADE;
+-- DROP TABLE IF EXISTS "customer" CASCADE;
+-- DROP TABLE IF EXISTS "admin" CASCADE;
+-- DROP TABLE IF EXISTS "USER" CASCADE;
+-- DROP TABLE IF EXISTS "user" CASCADE;  -- Drop old lowercase table if exists
+
+-- Drop old sequences if they exist
+-- DROP SEQUENCE IF EXISTS "USER_userId_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "user_userId_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "admin_adminId_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "customer_customerId_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "categories_id_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "products_id_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "cart_id_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "quotation_quotation_id_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "quotation_items_id_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "orders_order_id_seq" CASCADE;
+-- DROP SEQUENCE IF EXISTS "support_ticket_id_seq" CASCADE;
 
 -- =====================================================
 -- PART 1: TABLE CREATION
 -- =====================================================
 
--- Main user table
-CREATE TABLE IF NOT EXISTS "user" (
+-- Main user table (UPPERCASE to match Hibernate with globally_quoted_identifiers)
+CREATE TABLE IF NOT EXISTS "USER" (
     "userId" BIGSERIAL PRIMARY KEY,
     "userName" VARCHAR(100) NOT NULL UNIQUE,
     "userPassword" VARCHAR(100) NOT NULL,
@@ -24,14 +60,14 @@ CREATE TABLE IF NOT EXISTS "admin" (
     "adminId" BIGSERIAL PRIMARY KEY,
     "userId" BIGINT NOT NULL,
     "adminLevel" BIGINT,
-    FOREIGN KEY ("userId") REFERENCES "user"("userId") ON DELETE CASCADE
+    FOREIGN KEY ("userId") REFERENCES "USER"("userId") ON DELETE CASCADE
 );
 
 -- Customer table
 CREATE TABLE IF NOT EXISTS "customer" (
     "customerId" BIGSERIAL PRIMARY KEY,
     "userId" BIGINT UNIQUE,
-    FOREIGN KEY ("userId") REFERENCES "user"("userId") ON DELETE CASCADE
+    FOREIGN KEY ("userId") REFERENCES "USER"("userId") ON DELETE CASCADE
 );
 
 -- Categories table
@@ -70,7 +106,7 @@ CREATE TABLE IF NOT EXISTS "cart" (
     "quantity" BIGINT NOT NULL DEFAULT 1,
     "created_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY ("user_id") REFERENCES "user"("userId") ON DELETE CASCADE,
+    FOREIGN KEY ("user_id") REFERENCES "USER"("userId") ON DELETE CASCADE,
     FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE CASCADE,
     CONSTRAINT "unique_user_product" UNIQUE ("user_id", "product_id")
 );
@@ -85,7 +121,7 @@ CREATE TABLE IF NOT EXISTS "quotation" (
     "address" VARCHAR(255) NOT NULL,
     "qnumber" VARCHAR(20) NOT NULL,
     "qstatus" VARCHAR(20) DEFAULT 'PENDING' CHECK ("qstatus" IN ('PENDING', 'APPROVED', 'REJECTED')),
-    FOREIGN KEY ("customer_id") REFERENCES "user"("userId") ON DELETE CASCADE
+    FOREIGN KEY ("customer_id") REFERENCES "USER"("userId") ON DELETE CASCADE
 );
 
 -- Quotation items table
@@ -111,7 +147,7 @@ CREATE TABLE IF NOT EXISTS "orders" (
     "deliver_status" VARCHAR(20) DEFAULT 'PENDING' CHECK ("deliver_status" IN ('PENDING', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED')),
     "delivered_date" TIMESTAMP DEFAULT NULL,
     FOREIGN KEY ("quotation_id") REFERENCES "quotation"("quotation_id") ON DELETE CASCADE,
-    FOREIGN KEY ("customer_id") REFERENCES "user"("userId") ON DELETE CASCADE
+    FOREIGN KEY ("customer_id") REFERENCES "USER"("userId") ON DELETE CASCADE
 );
 
 -- Support table
@@ -139,6 +175,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Drop existing triggers if they exist before creating new ones
+DROP TRIGGER IF EXISTS update_categories_timestamp ON "categories";
+DROP TRIGGER IF EXISTS update_products_timestamp ON "products";
+DROP TRIGGER IF EXISTS update_cart_timestamp ON "cart";
+
 -- Create triggers for tables with updated_at
 CREATE TRIGGER update_categories_timestamp
     BEFORE UPDATE ON "categories"
@@ -160,16 +201,24 @@ CREATE TRIGGER update_cart_timestamp
 -- =====================================================
 
 -- Insert sample users (passwords should be BCrypt encrypted in production)
-INSERT INTO "user" ("userName", "userPassword", "telephone", "authority", "email") VALUES
+-- Note: Using uppercase "USER" table to match Hibernate's globally_quoted_identifiers
+INSERT INTO "USER" ("userName", "userPassword", "telephone", "authority", "email") VALUES
+    ('admin', 'adminpass', '1234567890', 'ADMIN', 'admin@example.com'),
     ('admin2', 'adminpass', '0998766542', 'ADMIN', 'admin2@example.com'),
-    ('user', 'userpass', '0987654321', 'USER', 'user@example.com'),
-    ('customer1', 'pass123', '0712345678', 'USER', 'customer1@gmail.com'),
-    ('customer2', 'pass234', '0723456789', 'USER', 'customer2@gmail.com')
+    ('customer', 'custpass', '0776543423', 'USER', 'bmaga@example.com'),
+    ('customer2', 'custpass', '0114563456', 'USER', 'customer2@gmail.com'),
+    ('customer3', 'custpass', '0763453245', 'USER', 'customer3@gmail.com'),
+    ('customer4', 'custpass', '0987654123', 'USER', 'customer4@gmail.com'),
+    ('customer5', 'custpasss', '0987654532', 'USER', 'customer5@gmail.com'),
+    ('customer6', 'test', '0111111111', 'USER', 'customer6@gmail.com'),
+    ('customer8', 'custpass', '0111111113', 'USER', 'customer8@gmail.com')
 ON CONFLICT DO NOTHING;
 
 -- Insert admin and customer records
-INSERT INTO "admin" ("userId", "adminLevel") VALUES (1, 2) ON CONFLICT DO NOTHING;
-INSERT INTO "customer" ("userId") VALUES (2), (3), (4) ON CONFLICT DO NOTHING;
+-- userId 1 and 2 are admins
+INSERT INTO "admin" ("userId", "adminLevel") VALUES (1, 2), (2, 2) ON CONFLICT DO NOTHING;
+-- userId 3-9 are customers
+INSERT INTO "customer" ("userId") VALUES (3), (4), (5), (6), (7), (8), (9) ON CONFLICT DO NOTHING;
 
 -- Insert categories
 INSERT INTO "categories" ("name", "description") VALUES
@@ -239,18 +288,18 @@ ON CONFLICT DO NOTHING;
 
 -- Insert sample cart items
 INSERT INTO "cart" ("user_id", "product_id", "quantity") VALUES
-    (2, 1, 1),
-    (2, 12, 2),
-    (3, 3, 1),
-    (3, 15, 1),
-    (4, 22, 3)
+    (3, 1, 1),
+    (3, 12, 2),
+    (4, 3, 1),
+    (5, 15, 1),
+    (6, 22, 3)
 ON CONFLICT DO NOTHING;
 
 -- Insert sample quotations
 INSERT INTO "quotation" ("customer_id", "total_price", "qname", "address", "qnumber", "qstatus") VALUES
-    (2, 72000.00, 'Bathroom Upgrade', '123 Main Street, Colombo', 'Q-1001', 'APPROVED'),
-    (3, 45000.00, 'Full Renovation', '45 Beach Road, Negombo', 'Q-1002', 'PENDING'),
-    (4, 28000.00, 'New Apartment Install', '12 Lake View Ave, Kandy', 'Q-1003', 'REJECTED')
+    (3, 72000.00, 'Bathroom Upgrade', '123 Main Street, Colombo', 'Q-1001', 'APPROVED'),
+    (4, 45000.00, 'Full Renovation', '45 Beach Road, Negombo', 'Q-1002', 'PENDING'),
+    (5, 28000.00, 'New Apartment Install', '12 Lake View Ave, Kandy', 'Q-1003', 'REJECTED')
 ON CONFLICT DO NOTHING;
 
 -- Insert quotation items
@@ -264,19 +313,19 @@ ON CONFLICT DO NOTHING;
 
 -- Insert sample orders
 INSERT INTO "orders" ("quotation_id", "customer_id", "total_amount", "payment_slip", "payment_status", "deliver_status") VALUES
-    (1, 2, 72000.00, '/uploads/slips/slip_1001.jpg', 'APPROVED', 'DELIVERED'),
-    (2, 3, 53000.00, '/uploads/slips/slip_1002.jpg', 'PENDING', 'PROCESSING'),
-    (3, 4, 28000.00, '/uploads/slips/slip_1003.jpg', 'REJECTED', 'CANCELLED')
+    (1, 3, 72000.00, '/uploads/slips/slip_1001.jpg', 'APPROVED', 'DELIVERED'),
+    (2, 4, 53000.00, '/uploads/slips/slip_1002.jpg', 'PENDING', 'PROCESSING'),
+    (3, 5, 28000.00, '/uploads/slips/slip_1003.jpg', 'REJECTED', 'CANCELLED')
 ON CONFLICT DO NOTHING;
 
 -- Insert support tickets
 INSERT INTO "support" ("user_id", "support_type", "description", "remark", "status") VALUES
-    (2, 'Warranty', 'Leaking faucet in bathroom', 'Customer contacted, awaiting parts', 'Pending'),
-    (3, 'Product Inquiry', 'Question about installation of basin', '', 'Pending'),
-    (4, 'Complaint', 'Missing parts in order #1023', 'Investigating with warehouse', 'Pending'),
-    (2, 'Warranty', 'Broken flush handle on water closet', '', 'Pending'),
-    (2, 'General', 'Request for product catalog', 'Sent catalog via email', 'Solved'),
-    (3, 'Warranty', 'Cracked ceramic on bathroom set', '', 'Pending')
+    (3, 'Warranty', 'Leaking faucet in bathroom', 'Customer contacted, awaiting parts', 'Pending'),
+    (4, 'Product Inquiry', 'Question about installation of basin', '', 'Pending'),
+    (5, 'Complaint', 'Missing parts in order #1023', 'Investigating with warehouse', 'Pending'),
+    (3, 'Warranty', 'Broken flush handle on water closet', '', 'Pending'),
+    (3, 'General', 'Request for product catalog', 'Sent catalog via email', 'Solved'),
+    (4, 'Warranty', 'Cracked ceramic on bathroom set', '', 'Pending')
 ON CONFLICT DO NOTHING;
 
 -- =====================================================
@@ -288,13 +337,13 @@ ON CONFLICT DO NOTHING;
 -- \dt
 
 -- Show table structures
--- \d "user"
+-- \d "USER"
 -- \d "products"
 -- \d "cart"
 -- \d "quotation"
 
 -- View data
--- SELECT * FROM "user";
+-- SELECT * FROM "USER";
 -- SELECT * FROM "categories";
 -- SELECT * FROM "products" LIMIT 10;
 -- SELECT * FROM "cart";
@@ -312,6 +361,7 @@ ON CONFLICT DO NOTHING;
 -- 2. Make sure your Spring Boot application is configured to use PostgreSQL
 -- 3. Set spring.jpa.hibernate.ddl-auto=update in production
 --    This will auto-create missing tables if needed
--- 4. Keep your database credentials secure!
+-- 4. Set spring.jpa.properties.hibernate.globally_quoted_identifiers=true
+--    This ensures all table names are quoted (USER becomes "USER")
+-- 5. Keep your database credentials secure!
 -- =====================================================
-

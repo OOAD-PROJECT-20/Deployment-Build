@@ -27,7 +27,7 @@ const AdminProductManagement = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('${API_BASE_URL}/products');
+      const response = await axios.get(`${API_BASE_URL}/products`);
       setProducts(response.data);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -74,7 +74,7 @@ const AdminProductManagement = () => {
       const formData = new FormData();
       formData.append('file', newProduct.imageFile);
 
-      const uploadResponse = await axios.post('${API_BASE_URL}/api/products/upload-image', formData, {
+      const uploadResponse = await axios.post(`${API_BASE_URL}/api/products/upload-image`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
@@ -90,7 +90,7 @@ const AdminProductManagement = () => {
         categoryId = catResponse.data.id;
       } catch (error) {
         // Category doesn't exist, create it
-        const newCat = await axios.post('${API_BASE_URL}/categories', {
+        const newCat = await axios.post(`${API_BASE_URL}/categories`, {
           name: newProduct.category,
           description: newProduct.category
         });
@@ -108,7 +108,7 @@ const AdminProductManagement = () => {
         isActive: true
       };
 
-      await axios.post('${API_BASE_URL}/products', productData);
+      await axios.post(`${API_BASE_URL}/products`, productData);
       
       alert('Successfully added product');
       
