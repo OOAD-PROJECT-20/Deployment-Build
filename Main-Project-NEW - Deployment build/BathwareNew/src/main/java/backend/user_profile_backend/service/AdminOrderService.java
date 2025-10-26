@@ -43,7 +43,11 @@ public class AdminOrderService {
         order.setPaymentStatus(Order.PaymentStatus.valueOf(status));
         orderRepository.save(order);
 
-        // Send email notification
+        // Email notification functionality - disabled for deployment demo
+        // NOTE: Email service is configured but disabled to avoid timeout on Render free tier
+        // Email config is set in environment variables (SPRING_MAIL_HOST, etc.)
+        // Uncomment below to enable email notifications in production with proper SMTP access
+        /*
         try {
             if ("APPROVED".equals(status)) {
                 String to = order.getCustomer().getEmail();
@@ -67,6 +71,7 @@ public class AdminOrderService {
             // Email failed but status update still succeeds
             System.err.println("Email notification failed: " + e.getMessage());
         }
+        */
     }
 
     // Update delivery status

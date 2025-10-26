@@ -58,6 +58,11 @@ public class AdminService {
         quotationRepository.save(quotation);
 
         if ("APPROVED".equals(status)) {
+            // Email notification functionality - disabled for deployment demo
+            // NOTE: Email service is configured but disabled to avoid timeout on Render free tier
+            // Email config is set in environment variables (SPRING_MAIL_HOST, etc.)
+            // Uncomment below to enable email notifications in production with proper SMTP access
+            /*
             try {
                 String to = quotation.getCustomer().getEmail();
                 String subject = "Your Quotation is Approved";
@@ -72,6 +77,7 @@ public class AdminService {
                 // Email failed but approval still succeeds
                 System.err.println("Email notification failed: " + e.getMessage());
             }
+            */
         }
     }
 
