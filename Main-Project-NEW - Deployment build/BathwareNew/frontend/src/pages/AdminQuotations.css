@@ -1,0 +1,299 @@
+.admin-page {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.admin-page h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.admin-page h3 {
+  font-size: 24px;
+  margin-bottom: 15px;
+  color: #555;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+  flex-wrap: wrap;
+}
+
+.tabs button {
+  padding: 12px 20px;
+  border: none;
+  background: #f5f5f5;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 8px 8px 0 0;
+  transition: all 0.3s;
+  white-space: nowrap;
+}
+
+.tabs button:hover {
+  background: #e0e0e0;
+}
+
+.tabs button.active {
+  background: #007bff;
+  color: white;
+  font-weight: bold;
+}
+
+/* Tab Content */
+.tab-content {
+  margin-top: 20px;
+}
+
+/* Table Styles */
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.admin-table thead {
+  background: #007bff;
+  color: white;
+}
+
+.admin-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.admin-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.admin-table tbody tr:hover {
+  background: #f9f9f9;
+}
+
+.admin-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Product List in Table */
+.admin-table ul {
+  margin: 0;
+  padding-left: 20px;
+  list-style-type: disc;
+}
+
+.admin-table li {
+  margin-bottom: 5px;
+  font-size: 13px;
+}
+
+/* Status Badges */
+.status {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.status.PENDING {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status.APPROVED {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status.REJECTED {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.status.PROCESSING {
+  background: #d1ecf1;
+  color: #0c5460;
+  border: 1px solid #bee5eb;
+}
+
+.status.SHIPPED {
+  background: #cce5ff;
+  color: #004085;
+  border: 1px solid #b8daff;
+}
+
+.status.DELIVERED {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status.CANCELLED {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.status.RETURNED {
+  background: #e2e3e5;
+  color: #383d41;
+  border: 1px solid #d6d8db;
+}
+
+/* Action Buttons */
+.admin-table button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-right: 8px;
+  margin-bottom: 5px;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.btn-approve {
+  background: #28a745;
+  color: white;
+}
+
+.btn-approve:hover {
+  background: #218838;
+}
+
+.btn-reject {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-reject:hover {
+  background: #c82333;
+}
+
+/* Payment Slip Link */
+.payment-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 6px 12px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  display: inline-block;
+  transition: all 0.2s;
+}
+
+.payment-link:hover {
+  background: #007bff;
+  color: white;
+}
+
+/* Delivery Status Select */
+.delivery-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  background: white;
+  transition: all 0.2s;
+  min-width: 150px;
+}
+
+.delivery-select:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+.delivery-select:hover {
+  border-color: #007bff;
+}
+
+/* Empty State */
+.admin-table tbody tr td[colspan] {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+  font-style: italic;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .admin-table {
+    font-size: 13px;
+  }
+  
+  .admin-table th,
+  .admin-table td {
+    padding: 10px;
+  }
+  
+  .tabs button {
+    font-size: 14px;
+    padding: 10px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-page {
+    padding: 10px;
+  }
+  
+  .admin-page h2 {
+    font-size: 24px;
+  }
+  
+  .admin-page h3 {
+    font-size: 20px;
+  }
+  
+  .tabs {
+    flex-direction: column;
+  }
+  
+  .tabs button {
+    width: 100%;
+    border-radius: 4px;
+    margin-bottom: 5px;
+  }
+  
+  .admin-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .admin-table button {
+    display: block;
+    width: 100%;
+    margin-bottom: 8px;
+  }
+}
+
+/* Loading State */
+.admin-page > p {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+  color: #666;
+}

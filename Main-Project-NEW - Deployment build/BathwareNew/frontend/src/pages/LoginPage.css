@@ -1,0 +1,80 @@
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: 'Inter', 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #eff6ff 0%, #e0f2fe 100%);
+    color: #1e293b;
+}
+
+.login-card {
+    width: 360px;
+    padding: 2.5rem;
+    border-radius: 1.25rem;
+    background: white;
+    box-shadow: 0 10px 32px rgba(0, 0, 0, 0.08);
+    text-align: center;
+}
+
+.login-card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem;
+}
+
+/* Inputs */
+.login-card input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1rem;
+    border-radius: 0.75rem;
+    border: 1px solid #cbd5e1;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.login-card input:focus {
+    border-color: #2563eb;
+    outline: none;
+}
+
+/* Button */
+.login-card button {
+    width: 100%;
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.login-card button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+/* Footer text */
+.login-card p {
+    font-size: 0.9rem;
+    margin-top: 1rem;
+    color: #64748b;
+}
+
+.login-card p a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.login-card p a:hover {
+    text-decoration: underline;
+}

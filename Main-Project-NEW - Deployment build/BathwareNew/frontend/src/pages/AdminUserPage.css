@@ -1,0 +1,137 @@
+.admin-users {
+    max-width: 1000px;
+    margin: 3rem auto;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    font-family: 'Inter', 'Poppins', sans-serif;
+    color: #1e293b;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+}
+
+.admin-controls input,
+.admin-controls select,
+.admin-controls button {
+    flex: 0 0 auto;
+    width: auto !important;
+    min-width: 120px;
+    padding: 0.6rem 0.9rem;
+    border-radius: 0.75rem;
+    border: 1px solid #cbd5e1;
+    font-size: 0.95rem;
+    background: #f8fafc;
+    transition: border-color 0.3s ease, background 0.3s ease;
+}
+
+.admin-controls select {
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' fill='gray' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 7l5 5 5-5H5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1rem;
+}
+
+.admin-controls input:focus,
+.admin-controls select:focus,
+.admin-controls button:focus {
+    border-color: #7c3aed;
+    outline: none;
+    background: #ffffff;
+}
+
+/* Table */
+.user-table-wrapper {
+    overflow-x: auto;
+    margin: 2rem 1rem 0 1rem;
+}
+
+.user-table {
+    width: 100%;
+    max-width: 950px;
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+.user-table th,
+.user-table td {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.user-table th:first-child { border-top-left-radius: 1rem; }
+.user-table th:last-child { border-top-right-radius: 1rem; }
+.user-table tr:last-child td:first-child { border-bottom-left-radius: 1rem; }
+.user-table tr:last-child td:last-child { border-bottom-right-radius: 1rem; }
+
+.user-table th {
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    color: white;
+    font-weight: 600;
+}
+
+.user-table td {
+    background: #f8fafc;
+    color: #334155;
+}
+
+.user-table tr:hover td {
+    background: #eef2ff;
+}
+
+.user-table input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    accent-color: #7c3aed;
+    cursor: pointer;
+}
+
+/* Buttons & Inputs same as admin page */
+button {
+    border: none;
+    border-radius: 0.75rem;
+    padding: 0.75rem 1.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: white;
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+}
+
+input, select {
+    border: 1px solid #cbd5e1;
+    border-radius: 0.5rem;
+    padding: 0.65rem 1rem;
+    font-size: 0.9rem;
+    width: auto;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input:focus, select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+    outline: none;
+}

@@ -1,0 +1,19 @@
+[build]
+  # Build command
+  command = "npm run build"
+  
+  # Directory that contains the deploy-ready HTML files and assets
+  publish = "build"
+  
+  # Directory with the serverless Lambda functions
+  functions = "functions"
+
+# Redirect all requests to index.html for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Environment variables (you'll set these in Netlify dashboard)
+# REACT_APP_API_URL will be set in Netlify UI
+

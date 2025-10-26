@@ -1,0 +1,91 @@
+.tickets-table-wrapper {
+    overflow-x: auto;
+    margin: 2rem 1rem;
+}
+
+.tickets-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    font-family: 'Arial', sans-serif;
+}
+
+.tickets-table th,
+.tickets-table td {
+    padding: 0.75rem 1rem;
+    text-align: center;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.tickets-table th:first-child { border-top-left-radius: 1rem; }
+.tickets-table th:last-child { border-top-right-radius: 1rem; }
+.tickets-table tr:last-child td:first-child { border-bottom-left-radius: 1rem; }
+.tickets-table tr:last-child td:last-child { border-bottom-right-radius: 1rem; }
+
+.tickets-table th {
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    color: white;
+    font-weight: 600;
+}
+
+.tickets-table td {
+    background: #f8fafc;
+    color: #334155;
+}
+
+.tickets-table tr:hover td {
+    background: #eef2ff;
+}
+
+.tickets-table input[type="text"], .tickets-table select {
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem;
+    border: 1px solid #cbd5e1;
+    font-size: 0.9rem;
+    width: 90%;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.tickets-table input:focus, .tickets-table select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    outline: none;
+}
+
+.tickets-table button {
+    border: none;
+    border-radius: 0.65rem;
+    padding: 0.5rem 1rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: white;
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tickets-table button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+.tickets-loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #64748b;
+    padding: 3rem;
+}
+
+.admin-tickets {
+    padding: 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.admin-tickets h2 {
+    color: #1e293b;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
